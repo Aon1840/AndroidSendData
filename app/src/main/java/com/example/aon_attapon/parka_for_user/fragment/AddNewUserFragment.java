@@ -68,15 +68,17 @@ public class AddNewUserFragment extends Fragment {
                 String surname = edtSurname.getText().toString().trim();
                 String tel = edtTel.getText().toString().trim();
                 String email = edtEmail.getText().toString().trim();
-                
+
+                Log.d("Method sendData","-------------------- pass this method --------------------");
                 if(!TextUtils.isEmpty(username) 
                         && !TextUtils.isEmpty(password)
                         && !TextUtils.isEmpty(name)
                         && !TextUtils.isEmpty(surname)
                         && !TextUtils.isEmpty(tel)
                         && !TextUtils.isEmpty(email)){
-
+                    Log.d("Method sendData","-------------------- pass before sendData --------------------");
                     sendData(username, password, name, surname, tel, email);
+                    Log.d("Method sendData","-------------------- pass After sendData --------------------");
                 }
             }
         });
@@ -84,12 +86,14 @@ public class AddNewUserFragment extends Fragment {
     }
 
     private void sendData(String username, String password, String name, String surname, String tel, String email) {
+        Log.d("Method sendData","-------------------- pass this method 1 --------------------");
         Call<User> call = HttpManager.getInstance()
                 .getService()
                 .addUser();
         call.enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
+                Log.d("Method sendData","-------------------- pass this method 2 --------------------");
                 if(response.isSuccessful()){
                     showResponse(response.body().toString());
                     Log.i("TAG","post submitted to API." + response.body().toString());
@@ -98,6 +102,7 @@ public class AddNewUserFragment extends Fragment {
 
             @Override
             public void onFailure(Call<User> call, Throwable t) {
+                Log.d("Method sendData","-------------------- pass this method 3 --------------------");
                 Log.e("TAG", "Unable to submit post to API.");
             }
         });
