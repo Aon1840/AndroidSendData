@@ -2,11 +2,14 @@ package com.example.aon_attapon.parka_for_user.manager;
 
 import android.content.Context;
 
+import com.example.aon_attapon.parka_for_user.dao.User;
 import com.example.aon_attapon.parka_for_user.manager.Contextor;
 import com.example.aon_attapon.parka_for_user.manager.http.ApiService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import retrofit2.Call;
+import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -24,7 +27,7 @@ public class HttpManager {
     }
 
     private Context mContext;
-    private ApiService service;
+    private static ApiService service;
 
     private HttpManager() {
         mContext = Contextor.getInstance().getContext();
@@ -34,7 +37,7 @@ public class HttpManager {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.1.40:8000/")
+                .baseUrl("https://application.parka028.me/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 
@@ -44,4 +47,9 @@ public class HttpManager {
     public ApiService getService() {
         return service;
     }
+
+//    public void addUser(User user, Callback<User> callback){
+//        Call<User> userCall = service.addUser(user);
+//        userCall.enqueue(callback);
+//    }
 }

@@ -9,8 +9,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.aon_attapon.parka_for_user.MainApplication;
 import com.example.aon_attapon.parka_for_user.R;
 import com.example.aon_attapon.parka_for_user.dao.User;
 import com.example.aon_attapon.parka_for_user.manager.HttpManager;
@@ -28,6 +31,7 @@ public class AddNewUserFragment extends Fragment {
     EditText edtUsername, edtPassword, edtName, edtSurname, edtTel, edtEmail;
     Button btnSend;
     TextView tvResult;
+    ProgressBar progressBar;
 
     public AddNewUserFragment() {
         super();
@@ -58,61 +62,48 @@ public class AddNewUserFragment extends Fragment {
         edtEmail = (EditText) rootView.findViewById(R.id.edtEmail);
         btnSend = (Button) rootView.findViewById(R.id.btnSend);
         tvResult = (TextView) rootView.findViewById(R.id.tvResult);
+        progressBar = (ProgressBar) rootView.findViewById(R.id.progress_bar);
 
+        progressBar.setVisibility(View.GONE);
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String username = edtUsername.getText().toString().trim();
-                String password = edtPassword.getText().toString().trim();
-                String name = edtName.getText().toString().trim();
-                String surname = edtSurname.getText().toString().trim();
-                String tel = edtTel.getText().toString().trim();
-                String email = edtEmail.getText().toString().trim();
+                progressBar.setVisibility(View.VISIBLE);
+                Call<User> call = HttpManager.getInstance()
+                        .getService()
+                        .createUser(edtUsername.getText().toString(),
+                                edtPassword.getText().toString(),
+                                edtName.getText().toString(),
+                                edtSurname.getText().toString(),
+                                edtTel.getText().toString(),
+                                edtEmail.getText().toString());
+                call.enqueue(new Callback<User>() {
+                    @Override
+                    public void onResponse(Call<User> call, Response<User> response) {
+                        progressBar.setVisibility(View.GONE);
+                        User responseUser = response.body();
+                        if (response.isSuccessful() && responseUser != null){
+                            tvResult.setText("ID: "+responseUser.getUserId()+
+                                    "\nUsername: "+responseUser.getUsername()+
+                                    "\nPassword: "+responseUser.getPassword()+
+                                    "\nName: "+responseUser.getName()+
+                                    "\nSurname: "+responseUser.getSurname()+
+                                    "\nTel: "+responseUser.getTel()+
+                                    "\nEmail "+responseUser.getEmail()+
+                                    "\nRegister Date: "+responseUser.getRegisterDate());
+                        } else {
+                            tvResult.setText("Response is "+String.valueOf(response.code()));
+                        }
+                    }
 
-                Log.d("Method sendData","-------------------- pass this method --------------------");
-                if(!TextUtils.isEmpty(username) 
-                        && !TextUtils.isEmpty(password)
-                        && !TextUtils.isEmpty(name)
-                        && !TextUtils.isEmpty(surname)
-                        && !TextUtils.isEmpty(tel)
-                        && !TextUtils.isEmpty(email)){
-                    Log.d("Method sendData","-------------------- pass before sendData --------------------");
-                    sendData(username, password, name, surname, tel, email);
-                    Log.d("Method sendData","-------------------- pass After sendData --------------------");
-                }
+                    @Override
+                    public void onFailure(Call<User> call, Throwable t) {
+                        tvResult.setText("Error is "+t.getMessage());
+                    }
+                });
             }
         });
 
-    }
-
-    private void sendData(String username, String password, String name, String surname, String tel, String email) {
-        Log.d("Method sendData","-------------------- pass this method 1 --------------------");
-        Call<User> call = HttpManager.getInstance()
-                .getService()
-                .addUser();
-        call.enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                Log.d("Method sendData","-------------------- pass this method 2 --------------------");
-                if(response.isSuccessful()){
-                    showResponse(response.body().toString());
-                    Log.i("TAG","post submitted to API." + response.body().toString());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                Log.d("Method sendData","-------------------- pass this method 3 --------------------");
-                Log.e("TAG", "Unable to submit post to API.");
-            }
-        });
-    }
-
-    public void showResponse(String response) {
-        if(tvResult.getVisibility() == View.GONE) {
-            tvResult.setVisibility(View.VISIBLE);
-        }
-        tvResult.setText(response);
     }
 
     @Override

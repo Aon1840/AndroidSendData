@@ -15,6 +15,15 @@ public class User {
     @SerializedName("email")            private String email;
     @SerializedName("register_date")    private Date registerDate;
 
+    public User(String username, String password, String name, String surname, String tel, String email){
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.tel = tel;
+        this.email = email;
+    }
+
     public int getUserId() {
         return userId;
     }
