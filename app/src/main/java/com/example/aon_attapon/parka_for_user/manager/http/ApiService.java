@@ -21,6 +21,6 @@ public interface ApiService {
                           @Field("tel") String tel,
                           @Field("email") String email);
 
-    @GET("users")
+    @GET("users/")
     Call<User> getAllUser();
 }
