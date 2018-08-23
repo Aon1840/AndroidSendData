@@ -1,13 +1,26 @@
+<!--<ListView-->
+    <!--android:id="@+id/listView"-->
+    <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_marginTop="10dp"-->
+    <!--android:layout_marginLeft="24dp"-->
+    <!--android:layout_marginRight="24dp">-->
+<!--</ListView>-->
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:orientation="vertical"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
     android:paddingLeft="24dp"
     android:paddingRight="24dp"
     >
 
     <ProgressBar
+        android:layout_gravity="center"
         android:id="@+id/progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,10 +32,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"></ListView>
+        android:layout_centerHorizontal="true"
+        android:dividerHeight="10dp"
+        android:divider="@null"></ListView>
     <!--<Button-->
     <!--android:id="@+id/btnTest"-->
     <!--android:text="TEST DIALOG"-->
     <!--android:layout_width="wrap_content"-->
     <!--android:layout_height="wrap_content" />-->
 </RelativeLayout>
+
+

@@ -16,15 +16,29 @@ import com.example.aon_attapon.parka_for_user.view.UserListItem;
 
 import java.util.List;
 
-public class UserListAdapter extends ArrayAdapter<User> {
+public class UserListAdapter extends BaseAdapter {
 
     private Context context;
     private List<User> users;
 
     public UserListAdapter(Context context, List<User> users){
-        super(context, R.layout.list_item_user, users);
         this.context = context;
         this.users = users;
+    }
+
+    @Override
+    public int getCount() {
+        return users.size();
+    }
+
+    @Override
+    public Object getItem(int position) {
+        return position;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     @Override
