@@ -28,6 +28,9 @@ import com.shashank.sony.fancydialoglib.FancyAlertDialog;
 import com.shashank.sony.fancydialoglib.FancyAlertDialogListener;
 import com.shashank.sony.fancydialoglib.Icon;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -110,6 +113,8 @@ public class AllUserFragment extends Fragment {
             public void onResponse(Call<List<User>> call, Response<List<User>> response) {
                 progressBar.setVisibility(View.GONE);
                 users = response.body();
+
+                Collections.reverse(users);
                 listViewUserList.setAdapter(new UserListAdapter(getContext(), users));
             }
 
@@ -150,5 +155,10 @@ public class AllUserFragment extends Fragment {
         if (savedInstanceState != null) {
             // Restore Instance State here
         }
+    }
+
+    private void sortAscending(){
+        List<List<User>> userList = Arrays.asList(users);
+        Collections.reverse(userList);
     }
 }
