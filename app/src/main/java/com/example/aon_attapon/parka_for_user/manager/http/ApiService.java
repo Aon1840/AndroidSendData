@@ -1,6 +1,9 @@
 package com.example.aon_attapon.parka_for_user.manager.http;
 
 import com.example.aon_attapon.parka_for_user.dao.User;
+import com.example.aon_attapon.parka_for_user.dao.UserCollection;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -22,5 +25,6 @@ public interface ApiService {
                           @Field("email") String email);
 
     @GET("users/")
-    Call<User> getAllUser();
+    Call<List<User>> getAllUser();
+
 }
