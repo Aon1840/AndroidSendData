@@ -114,7 +114,7 @@ public class AllUserFragment extends Fragment {
                 progressBar.setVisibility(View.GONE);
                 users = response.body();
 
-                Collections.reverse(users);
+//                Collections.reverse(users);
                 listViewUserList.setAdapter(new UserListAdapter(getContext(), users));
             }
 

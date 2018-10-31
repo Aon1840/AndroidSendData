@@ -37,7 +37,7 @@ public class HttpManager {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("https://application.parka028.me/")
+                .baseUrl("https://applicationserver.parka028.me/")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 

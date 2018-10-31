@@ -23,7 +23,7 @@ public class ViewPagerAdapter extends FragmentPagerAdapter {
     }
 
     @Override
-    public int getCount() {
+    public int getCount()  {
         return FragmentListTitiles.size();
     }
 
